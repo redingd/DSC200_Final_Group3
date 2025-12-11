@@ -296,3 +296,17 @@ df2 = pd.read_excel("./demographics_Neighborhoods.xlsx")
 df2 = df2.drop(columns=["Male 15 to 19 years", "Male 20 to 24 years", "Male 60 to 64 years", "Male 65 to 69 years", "Female 15 to 19 years", "Female 20 to 24 years", "Female 60 to 64 years", "Female 65 to 69 years"])
 # write data to csv file
 df2.to_csv("./demographics_Neighborhoods.csv", index=False)
+
+
+
+# pdf file cleaning, using pdf plumber and converting it into a dataframe
+with pdfplumber.open("./pre-application-guide-04-22-2025.pdf") as pdf:
+    table_page = pdf.pages[2] # page 3
+    table = table_page.extract_table()
+df3 = pd.DataFrame(table)
+# remove first row (index 0), as it just counts up from 0
+df3 = df3.drop(0)
+# drop the columns containing symbols
+df3 = df3.drop(columns=["C9", "C10", "C11"])
+# convert to csv
+df3.to_csv("./pre-application-guide-04-22-2025.csv", index=False)
