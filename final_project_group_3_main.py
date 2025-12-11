@@ -231,6 +231,7 @@ while k < len(sq_ft):
     available_rent[k] = available_rent[k].replace("\n", '')
     available_rent[k] = available_rent[k].replace("\t", '')
     available_rent[k] = available_rent[k].replace("Avail.", '')
+    length_rental[k] - length_rental[k].replace(" Mo.", '')
     # making a column of price per square foot after cleaning the columns it will be based off of and turning them into
     # integers - using the round method to round to 2 digits, because there's only 100 cents in a dollar, and it doesn't
     # make sense to have more accuracy than what you could pay
@@ -247,11 +248,13 @@ while k < len(sq_ft):
 data = {"Building Name": building_name, "Street Address": street_address, "Zip Code": zip_code,
         "Phone Number": phone_number, "Number of Beds": num_beds, "Number of Baths": num_baths,
         "Floor Plan": floor_plan, "Square Feet": sq_ft, "Base Rent": base_rent,
-        "Availability of Apartment": available_rent, "Retail Rent": retail_rent, "Length of Rental": length_rental,
+        "Availability of Apartment": available_rent, "Rent with Utilities": retail_rent, "Length of Rental": length_rental,
         "Tokenized Sentences with no stopwords": tokenized_no_stopwords, "Price per Square Foot": price_per_sq_ft,
         "Amenities": amenities}
 df = pd.DataFrame(data)
 df.set_index("Zip Code")
+# changing some types to better suit what data they're actually holding instead of keeping them as strings
+df.astype({"Square Feet": int, "Base Rent": int, "Length of Rental": int, "Rent with Utilities": float, "Price per Square Foot": float})
 
 
 headers = {
