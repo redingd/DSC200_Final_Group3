@@ -248,13 +248,13 @@ while k < len(sq_ft):
 data = {"Building Name": building_name, "Street Address": street_address, "Zip Code": zip_code,
         "Phone Number": phone_number, "Number of Beds": num_beds, "Number of Baths": num_baths,
         "Floor Plan": floor_plan, "Square Feet": sq_ft, "Base Rent": base_rent,
-        "Availability of Apartment": available_rent, "Rent with Utilities": retail_rent, "Length of Rental": length_rental,
+        "Availability of Apartment": available_rent, "Rent with Utilities": retail_rent, "Length of Rental (Months)": length_rental,
         "Tokenized Sentences with no stopwords": tokenized_no_stopwords, "Price per Square Foot": price_per_sq_ft,
         "Amenities": amenities}
 df = pd.DataFrame(data)
 df.set_index("Zip Code")
 # changing some types to better suit what data they're actually holding instead of keeping them as strings
-df.astype({"Square Feet": int, "Base Rent": int, "Length of Rental": int, "Rent with Utilities": float, "Price per Square Foot": float})
+df.astype({"Square Feet": int, "Base Rent": int, "Length of Rental (Months)": int, "Rent with Utilities": float, "Price per Square Foot": float})
 
 
 headers = {
