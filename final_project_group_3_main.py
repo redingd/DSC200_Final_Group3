@@ -7,6 +7,7 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 nltk.download("punkt_tab")
 nltk.download('stopwords')
+import pdfplumber
 
 
 # this page has 4 urls I am interested in going to, but this page is only useful for getting these 4 urls - these urls
