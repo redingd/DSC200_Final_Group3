@@ -273,3 +273,26 @@ data_pd.rename(columns={"zip_code": "Zip Code"}, inplace=True)
 # outer join of the api and scraped datasets, joining on the zip code because that is the column that they have in common
 merged_api_and_scrape = pd.merge(df, data_pd, on="Zip Code", how="outer")
 merged_api_and_scrape.to_csv("./api_and_scrape.csv")
+
+
+# csv file cleaning
+# create pandas dataframe with csv file
+df1 = pd.read_csv("./Apartment_Market_Prices.csv")
+
+# There does not seem to be any duplicates so that does not have to be addressed
+# Null values are represented in this dataset as 0
+# Most, if not all, rows with significant amount of missing data have a null value (0) in cost category column
+# If a row has a 0 in that column, it will be removed
+df1 = df1.drop(df1[df1["Cost Category"] == 0].index)
+
+
+
+# Excel file cleaning
+# read data first
+df2 = pd.read_excel("./demographics_Neighborhoods.xlsx")
+# raw data does not seem to contain any bad/null values
+# some columns repeat data or combine a few other columns (i.e. there is Male 15-17 years, Male 18-19 years, and Male 15-19 years)
+# these "repeat" columns are unnecessary so they are to be removed (columns 52-59)
+df2 = df2.drop(columns=["Male 15 to 19 years", "Male 20 to 24 years", "Male 60 to 64 years", "Male 65 to 69 years", "Female 15 to 19 years", "Female 20 to 24 years", "Female 60 to 64 years", "Female 65 to 69 years"])
+# write data to csv file
+df2.to_csv("./demographics_Neighborhoods.csv", index=False)
