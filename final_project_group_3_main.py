@@ -40,7 +40,6 @@ retail_rent = []
 length_rental = []
 available_rent = []
 sentence = []
-amenities = []
 j = 0
 while j < 4:
     # the list of urls is in alphabetical order. Much of the html on this website is organized alphabetically by either
@@ -113,7 +112,7 @@ while j < 4:
             available_rent.append(
                 apt.find("span", class_="spaces-text-p-s-default spaces-color-content-2 spaces-default-lease-term",
                          attrs={"data-spaces-control": "unit-default-available-date"}).text.strip())
-            # to get a list of amenities, and a descriptive sentence for each apartment I need to go to a different page
+            # to get a descriptive sentence for each apartment I need to go to a different page
             # and the url that this gives gets tacked onto the end of the url for the page of available apartments, so
             # I am using string concatenation and finding a link with a certain class and a certain attributes and
             # getting the link for the new page to scrape; this is a different page for each apartment unit
@@ -125,13 +124,6 @@ while j < 4:
             # list of descriptive sentences to tokenize and remove stopwords on later; looking through the full new page
             # for this, getting the text and stripping it
             sentence.append(prspg.find("div", class_="spaces__detail-description").text.strip())
-            # there are several amenities, and I'm finding the list of them using find_all, and then iterating through
-            # and just appending the text of them to my list
-            amenity = prspg.find_all("li", class_="spaces-li")
-            amenity_list = []
-            for amnty in amenity:
-                amenity_list.append(amnty.text)
-            amenities.append(amenity_list)
     # this is for the other pages, which are all laid out the same way
     else:
         # finding all of the available apartments using find_all, looking for divs with a certain class
@@ -199,9 +191,6 @@ while j < 4:
                 # list of descriptive sentences to tokenize and remove stopwords on later; looking through the full new
                 # page for this, getting the text and stripping it
                 sentence.append(prspg.find("div", class_="spaces__detail-description").text.strip())
-                # these pages sadly don't have amenities, so to build the dataframe correctly I just added empty strings
-                # so they would still be the same length
-                amenities.append("")
                 # I also had to find the day that they were available to rent on this new page, so I looked through the
                 # full page for a span with a certain attribute, got the text, and stripped it
                 available_rent.append(
@@ -249,8 +238,7 @@ data = {"Building Name": building_name, "Street Address": street_address, "Zip C
         "Phone Number": phone_number, "Number of Beds": num_beds, "Number of Baths": num_baths,
         "Floor Plan": floor_plan, "Square Feet": sq_ft, "Base Rent": base_rent,
         "Availability of Apartment": available_rent, "Rent with Utilities": retail_rent, "Length of Rental (Months)": length_rental,
-        "Tokenized Sentences with no stopwords": tokenized_no_stopwords, "Price per Square Foot": price_per_sq_ft,
-        "Amenities": amenities}
+        "Tokenized Sentences with no stopwords": tokenized_no_stopwords, "Price per Square Foot": price_per_sq_ft}
 df = pd.DataFrame(data)
 df.set_index("Zip Code")
 # changing some types to better suit what data they're actually holding instead of keeping them as strings
