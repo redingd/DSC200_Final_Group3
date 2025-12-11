@@ -231,7 +231,7 @@ while k < len(sq_ft):
     available_rent[k] = available_rent[k].replace("\n", '')
     available_rent[k] = available_rent[k].replace("\t", '')
     available_rent[k] = available_rent[k].replace("Avail.", '')
-    length_rental[k] - length_rental[k].replace(" Mo.", '')
+    length_rental[k] = length_rental[k].replace(" Mo.", '')
     # making a column of price per square foot after cleaning the columns it will be based off of and turning them into
     # integers - using the round method to round to 2 digits, because there's only 100 cents in a dollar, and it doesn't
     # make sense to have more accuracy than what you could pay
